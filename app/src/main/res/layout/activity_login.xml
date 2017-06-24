@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f93"
+            android:fillViewport="true"
+            android:orientation="vertical"
+            android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/blog"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <com.xiaoq.base.views.ClearableEditText
+                android:id="@+id/et_username"
+                style="@style/LoginNameEditTextStyle"
+                android:drawableLeft="@mipmap/login_tel"
+                android:hint="请输入用户名"
+                android:padding="10dp"
+                />
+
+            <com.xiaoq.base.views.ClearableEditText
+                android:id="@+id/et_password"
+                style="@style/LoginPasswordEditTextStyle"
+                android:layout_below="@id/et_username"
+                android:layout_marginTop="30dp"
+                android:drawableLeft="@mipmap/login_password"
+                android:hint="请输入密码"
+                android:padding="10dp"
+                />
+
+            <Button
+                android:id="@+id/bt_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/et_password"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_login_button"
+                android:text="登录"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bt_login"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_version_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:text="版本号 :"
+                    android:textSize="10sp"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_forget_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="忘记密码"/>
+
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="#000000"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_regist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="立即注册"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

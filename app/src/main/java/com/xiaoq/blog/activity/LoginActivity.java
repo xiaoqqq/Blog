@@ -31,7 +31,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
 
     private ClearableEditText mUserName;
     private ClearableEditText mPassWord;
@@ -90,8 +90,22 @@ public class MainActivity extends BaseActivity {
                 if (!isNull(username) && !isNull(password)) {
                     login(username, password);
                 } else {
-                    ToastUtils.show(MainActivity.this, "用户名或者密码不能为空");
+                    ToastUtils.show(LoginActivity.this, "用户名或者密码不能为空");
                 }
+            }
+        });
+
+        mTvForgetPassWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show(LoginActivity.this, "忘记密码");
+            }
+        });
+
+        mTvRegist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMyActivity(RegistActivity.class);
             }
         });
     }
@@ -121,7 +135,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ToastUtils.show(MainActivity.this, t.getMessage());
+                ToastUtils.show(LoginActivity.this, t.getMessage());
 
             }
         });
@@ -143,6 +157,8 @@ public class MainActivity extends BaseActivity {
             } else { // 1:成功
                 String msg = jsonObject.getString("msg");
                 ToastUtils.show(this, msg);
+                startMyActivity(HomeActivity.class);
+                finish();
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -166,50 +182,5 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
-    /**
-     * 点击EditText文本框之外任何地方隐藏键盘的解决办法
-     *
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
-
-    public boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = {0, 0};
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
 
 }

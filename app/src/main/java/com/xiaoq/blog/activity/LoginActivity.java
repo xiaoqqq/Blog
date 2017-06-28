@@ -1,13 +1,9 @@
 package com.xiaoq.blog.activity;
 
-import android.content.Context;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xiaoq.base.BaseActivity;

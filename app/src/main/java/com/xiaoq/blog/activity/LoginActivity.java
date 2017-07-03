@@ -126,12 +126,13 @@ public class LoginActivity extends BaseActivity {
                     parseJson(result);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    ToastUtils.show(LoginActivity.this, e.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ToastUtils.show(LoginActivity.this, t.getMessage());
+                ToastUtils.show(LoginActivity.this, "网络连接超时!!!");
 
             }
         });

@@ -2,4 +2,20 @@
     <string name="app_name">Blog</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="about_author">
+        <i>作者: xiaoqqq </i>
+    \n
+    \n
+    <i>联系QQ: 1508300193 </i>
+    \n
+    \n
+    \n
+    \n
+    <b>我不生产代码,我只是代码世界的搬运工!!!</b>
+    \n
+    \n
+    \n
+    \n
+    <b>有任何建议或者反馈可以随时联系作者</b>
+    </string>
 </resources>

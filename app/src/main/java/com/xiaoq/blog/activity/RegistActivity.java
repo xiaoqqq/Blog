@@ -110,7 +110,7 @@ public class RegistActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ToastUtils.show(RegistActivity.this, t.getMessage());
+                ToastUtils.show(RegistActivity.this, "网络连接超时!!!");
             }
         });
 

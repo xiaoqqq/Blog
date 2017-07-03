@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.xiaoq.base.BaseActivity;
 import com.xiaoq.base.utils.Logger;
+import com.xiaoq.base.utils.SPUtils;
 import com.xiaoq.base.utils.SystemUtils;
 import com.xiaoq.base.utils.ToastUtils;
 import com.xiaoq.base.views.ClearableEditText;
@@ -123,6 +124,7 @@ public class LoginActivity extends BaseActivity {
                     byte[] bytes = response.body().bytes();
                     String result = new String(bytes);
                     Logger.e(result);
+                    SPUtils.put(LoginActivity.this, Constants.USER_INFO, result);
                     parseJson(result);
                 } catch (IOException e) {
                     e.printStackTrace();

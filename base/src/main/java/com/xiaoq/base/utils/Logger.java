@@ -3,12 +3,6 @@ package com.xiaoq.base.utils;
 
 import android.util.Log;
 
-/**
- * @ClassName: Logger
- * @Description: TODO(日志工具类)
- * @Author: 王富彬
- * @Date: 2014-2-19 下午10:24:00
- */
 public class Logger {
     private final static String TAG = "myBlog";
 

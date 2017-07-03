@@ -1,21 +1,32 @@
 package com.xiaoq.blog.activity;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xiaoq.base.BaseActivity;
+import com.xiaoq.base.BaseFragment;
 import com.xiaoq.base.utils.Logger;
+import com.xiaoq.base.utils.SPUtils;
 import com.xiaoq.base.utils.ToastUtils;
 import com.xiaoq.blog.R;
+import com.xiaoq.blog.common.Constants;
+import com.xiaoq.blog.fragment.AboutAuthorFragment;
+import com.xiaoq.blog.fragment.EditViewInfoFragment;
+import com.xiaoq.blog.fragment.HomeFragment;
+import com.xiaoq.blog.fragment.SettingFragment;
 import com.xiaoq.blog.views.GlideCircleTransform;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by user on 2017/6/24.
@@ -29,8 +40,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String[] lvs = {"List Item 01", "List Item 02", "List Item 03", "List Item 04"};
-    private ArrayAdapter arrayAdapter;
     private ImageView mIvHead;
     private LinearLayout mLlHome;
     private LinearLayout mLlSetting;
@@ -88,6 +97,34 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         Glide.with(this).load(R.mipmap.moren).transform(new GlideCircleTransform(this)).into(mIvHead);
+        // 显示昵称
+        String result = (String) SPUtils.get(this, Constants.USER_INFO, "");
+        showNickName(result);
+        FragmentManager fm = getFragmentManager();
+        // 开启Fragment事务
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fl_content, new HomeFragment());
+        // 事务提交
+        transaction.commit();
+    }
+
+    /**
+     * 显示用户昵称
+     *
+     * @param result 登录成功保存的json字符串
+     */
+    private void showNickName(String result) {
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            if (!jsonObject.isNull("data")) {
+                JSONObject data = jsonObject.getJSONArray("data").getJSONObject(0);
+                String nickname = data.getString("nickname");
+                mTvNickName.setText(nickname);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -106,24 +143,35 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mLlAboutAuthor.setOnClickListener(this);
     }
 
+    /**
+     * 展示fragment界面
+     *
+     * @param fragment 具体的fragment
+     */
+    private void displayFragmentPage(BaseFragment fragment) {
+        FragmentManager fm = getFragmentManager();
+        // 开启Fragment事务
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fl_content, fragment);
+        // 事务提交
+        transaction.commit();
+        mDrawerLayout.closeDrawers();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_left_home:
-                ToastUtils.show(this, "Home");
-                mDrawerLayout.closeDrawers();
+                displayFragmentPage(new HomeFragment());
                 break;
             case R.id.ll_left_setting:
-                ToastUtils.show(this, "Setting");
-                mDrawerLayout.closeDrawers();
+                displayFragmentPage(new SettingFragment());
                 break;
             case R.id.ll_left_about_author:
-                ToastUtils.show(this, "About Author");
-                mDrawerLayout.closeDrawers();
+                displayFragmentPage(new AboutAuthorFragment());
                 break;
             case R.id.tv_left_edit_view_info:
-                ToastUtils.show(this, "Edit or View Info");
-                mDrawerLayout.closeDrawers();
+                displayFragmentPage(new EditViewInfoFragment());
                 break;
             case R.id.iv_left_head:
                 ToastUtils.show(this, "Head click!");

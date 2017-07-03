@@ -10,4 +10,7 @@ package com.xiaoq.blog.common;
 public class Constants {
     //   http://172.17.221.147:8080/user/login?username=xiao&password=123
     public static String URL = "http://172.17.221.147:8080/";
+
+    /*登录成功的用户信息*/
+    public static final String USER_INFO = "user_info";
 }

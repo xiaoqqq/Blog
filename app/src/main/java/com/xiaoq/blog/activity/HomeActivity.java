@@ -21,6 +21,7 @@ import com.xiaoq.blog.R;
 import com.xiaoq.blog.common.Constants;
 import com.xiaoq.blog.fragment.AboutAuthorFragment;
 import com.xiaoq.blog.fragment.EditViewInfoFragment;
+import com.xiaoq.blog.fragment.HeadFragment;
 import com.xiaoq.blog.fragment.HomeFragment;
 import com.xiaoq.blog.fragment.SettingFragment;
 import com.xiaoq.blog.views.GlideCircleTransform;
@@ -46,6 +47,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout mLlAboutAuthor;
     private TextView mTvNickName;
     private TextView mTvEditViewInfo;
+    private TextView mTvTitleRight;
 
     @Override
     protected int initLayoutId() {
@@ -56,7 +58,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void initView() {
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.dl_left);
+        mTvTitleRight = (TextView) findViewById(R.id.tv_title_right);
         setImmerseLayout(this, toolbar);
+        setImmerseLayout(this, mTvTitleRight);
         // 头像
         mIvHead = (ImageView) findViewById(R.id.iv_left_head);
         // 昵称
@@ -141,6 +145,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mLlHome.setOnClickListener(this);
         mLlSetting.setOnClickListener(this);
         mLlAboutAuthor.setOnClickListener(this);
+        mTvTitleRight.setOnClickListener(this);
     }
 
     /**
@@ -155,6 +160,24 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         transaction.replace(R.id.fl_content, fragment);
         // 事务提交
         transaction.commit();
+        mTvTitleRight.setText("");
+        mDrawerLayout.closeDrawers();
+    }
+
+    /**
+     * 展示fragment界面
+     *
+     * @param fragment 具体的fragment
+     * @param right    toolbar右侧的文字内容
+     */
+    private void displayFragmentPage(BaseFragment fragment, String right) {
+        FragmentManager fm = getFragmentManager();
+        // 开启Fragment事务
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fl_content, fragment);
+        // 事务提交
+        transaction.commit();
+        mTvTitleRight.setText(right);
         mDrawerLayout.closeDrawers();
     }
 
@@ -171,11 +194,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 displayFragmentPage(new AboutAuthorFragment());
                 break;
             case R.id.tv_left_edit_view_info:
-                displayFragmentPage(new EditViewInfoFragment());
+                displayFragmentPage(new EditViewInfoFragment(), "编辑");
                 break;
             case R.id.iv_left_head:
-                ToastUtils.show(this, "Head click!");
-                mDrawerLayout.closeDrawers();
+                displayFragmentPage(new HeadFragment());
+                break;
+            case R.id.tv_title_right:
+                ToastUtils.show(this, mTvTitleRight.getText());
                 break;
             default:
                 break;
